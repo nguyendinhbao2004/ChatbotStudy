@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
         await _auth.login(_emailController.text, _passwordController.text);
     if (!mounted) return;
     if (success) {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/main');
     } else {
       final msg = _auth.error ?? 'Đăng nhập thất bại';
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
@@ -62,7 +62,28 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.school, size: 56, color: colorScheme.primary),
+                      Row(
+                        children: [
+                          Container(
+                            width: 44,
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: colorScheme.primaryContainer,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(Icons.menu_book,
+                                color: colorScheme.onPrimaryContainer),
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'LearnAI',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                       const SizedBox(height: 12),
                       Text(
                         'Chatbot Study',
@@ -94,10 +115,27 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 20),
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
+                        child: GestureDetector(
                           key: const Key('loginButton'),
-                          onPressed: _auth.loading ? null : _onLogin,
-                          child: const Text('Đăng nhập'),
+                          onTap: _auth.loading ? null : _onLogin,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  colorScheme.primary,
+                                  colorScheme.secondary,
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            alignment: Alignment.center,
+                            child: const Text('Sign In',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ),
                         ),
                       ),
                       if (_auth.loading) ...[

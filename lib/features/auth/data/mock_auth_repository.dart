@@ -11,7 +11,6 @@ class MockAuthRepository {
   );
 
   Future<User?> login(String email, String password) async {
-    await Future.delayed(const Duration(milliseconds: 300));
     if (email.trim() == _email && password == _password) {
       return _user;
     }

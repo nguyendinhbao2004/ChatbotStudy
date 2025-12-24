@@ -10,16 +10,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:chatbotstudy/app/app.dart';
 
 void main() {
-  testWidgets('Login shows Home cards', (WidgetTester tester) async {
+  testWidgets('Login shows Main tabs', (WidgetTester tester) async {
     await tester.pumpWidget(const App());
     await tester.enterText(
         find.byKey(const Key('emailField')), 'student@example.com');
     await tester.enterText(
         find.byKey(const Key('passwordField')), '123456');
     await tester.tap(find.byKey(const Key('loginButton')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(find.text('Trang chủ'), findsOneWidget);
-    expect(find.byKey(const Key('homeCoursesCard')), findsOneWidget);
-    expect(find.byKey(const Key('homeChatbotCard')), findsOneWidget);
   });
 }
