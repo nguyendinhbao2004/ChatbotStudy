@@ -25,7 +25,14 @@ class _LoginPageState extends State<LoginPage> {
         await _auth.login(_emailController.text, _passwordController.text);
     if (!mounted) return;
     if (success) {
-      Navigator.pushReplacementNamed(context, '/main');
+      final role = _auth.currentUser?.role;
+      if (role == 'admin') {
+        Navigator.pushReplacementNamed(context, '/admin');
+      } else if (role == 'teacher') {
+        Navigator.pushReplacementNamed(context, '/teacher');
+      } else {
+        Navigator.pushReplacementNamed(context, '/main');
+      }
     } else {
       final msg = _auth.error ?? 'Đăng nhập thất bại';
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
